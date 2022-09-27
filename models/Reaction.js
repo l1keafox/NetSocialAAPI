@@ -6,7 +6,9 @@ const reactSchema = new Schema(
     {
         reactionId:{
             // Use Mongoose's ObjectId data type
+            type: Schema.Types.ObjectId,
             // Default value is set to a new ObjectId
+            default: () => new Types.ObjectId(),
         },
         reactionBody:{
             type:String,
@@ -19,6 +21,7 @@ const reactSchema = new Schema(
         },
         createdAt:{
             type:Date,
+            default: Date.now,
             // Set default value to the current timestamp
             // Use a getter method to format the timestamp on query            
         }
@@ -26,6 +29,7 @@ const reactSchema = new Schema(
     {
         toJSON: {
           getters: true,
+          virtuals: true,
         },
         id: false,
         }
