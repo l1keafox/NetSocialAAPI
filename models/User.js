@@ -1,5 +1,10 @@
-const { Schema, Types } = require('mongoose');
+const { Schema, Types ,model} = require('mongoose');
 
+
+var isEmail = function(email) {
+    var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return re.test(email)
+};
 const userSchema = new Schema(
     {
         username:{
