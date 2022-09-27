@@ -116,9 +116,33 @@ const getVideoResponses = (int) => {
   }
   return results;
 };
+const getReaction = (int) => {
+  if (int === 1) {
+    return getRandomArrItem(possibleResponses);
+  }
+  let results = [];
+  for (let i = 0; i < int; i++) {
+    results.push({
+      reactionBody: getRandomArrItem(possibleResponses),
+      username: getRandomName(),
+    });
+  }
+  return results;
+};
+const getRandomThought = (int) => {
+  let results = [];
+  for (let i = 0; i < int; i++) {
+    results.push({
+      thoughtText: getRandomArrItem(descriptionsBodies),
+      username: getRandomName(),
+      responses: [...getReaction(3)],
+    });
+  }
+  return results;
+};
 
 const getRandomComment = () => {
   return getRandomArrItem(descriptionsBodies);
 }
 // Export the functions for use in seed.js
-module.exports = { getRandomName,getRandomComment};
+module.exports = { getRandomName,getRandomComment,getRandomThought,getReaction};

@@ -1,6 +1,6 @@
 const connection = require("../config/connection");
 const { User, Thought, Reaction } = require("../models");
-const { getRandomName ,getRandomComment} = require("./data");
+const { getRandomName ,getRandomComment,getReaction,getRandomThought} = require("./data");
 
 // const data
 
@@ -13,9 +13,9 @@ connection.once("open", async () => {
   await Thought.deleteMany({});
   await Reaction.deleteMany({});
 
-  const users = [];
-  const thoughts = [];
-  const reactions = [];
+  let users = [];
+  let thoughts = [];
+  let reactions = [];
 
   for (let i = 0; i < 20; i++) {
     const username = getRandomName();
@@ -26,16 +26,12 @@ connection.once("open", async () => {
         username,
         "email":`${last}@${first}.com`,
     });
-    const thoughtText = getRandomComment();
-    thoughts.push({
-        thoughtText,
-        "userName":username,
-    });
   }
-
+  thoughts = getRandomThought(10);
+  reactions = getReaction(20);
    await User.collection.insertMany(users);
    await Thought.collection.insertMany(thoughts);
-  // await Reaction.collection.insertMany(reactions);
+   await Reaction.collection.insertMany(reactions);
 
   //console.table(users);
   //console.table(videos);
