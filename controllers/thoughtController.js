@@ -24,10 +24,17 @@ module.exports = {
         .then((dbUserData) => res.json(dbUserData))
         .catch((err) => res.status(500).json(err));
     },
+    updateThought(req,res){
+
+    },
+    deleteThought(req,res){
+
+    },
     addReactionToThought(req,res){
 //        Thought.
     },
     deleteReactionFromThought(req,res){
-        
-    }
+
+    },
+
 };

@@ -22,8 +22,14 @@ module.exports = {
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => res.status(500).json(err));
   },
+
+  deleteUser(req,res){
+
+  },
+  updateUser(req,res){
+
+  },
   addFriend(req, res) {
-    console.log("it should");
     User.findByIdAndUpdate(
       { _id: req.params.userId },
       {
