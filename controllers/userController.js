@@ -24,10 +24,23 @@ module.exports = {
   },
 
   deleteUser(req,res){
-
+    User.findOneAndDelete( req.params.userId )
+        .then((userData) => 
+          !userData
+          ? res.status(404).json() 
+          : Thought.remove({ userName: userData.username} )
+        );
   },
   updateUser(req,res){
+    User.findOneAndUpdate( 
+      {_id:req.params.userId},
+      {$set: req.body},
+      {runValidators:true, new:true}
+    ).then((user)=>
+      res.json(user)
+    ).catch((err)=>{
 
+    });
   },
   addFriend(req, res) {
     User.findByIdAndUpdate(
@@ -40,7 +53,7 @@ module.exports = {
     ).then ((dbUserData) => res.json(dbUserData))
   },
   async deleteFriend(req, res) {
-    await User.findOneAndDelete( req.params.friendId)
+    await User.findOneAndRemove( {friends: req.params.friendId} )
               .then ((dbUserData) => res.json(dbUserData));
   },
 };
