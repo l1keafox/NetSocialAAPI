@@ -33,5 +33,8 @@ module.exports = {
       }
     ).then ((dbUserData) => res.json(dbUserData))
   },
-  deleteFriend(req, res) {},
+  async deleteFriend(req, res) {
+    await User.findOneAndDelete( req.params.friendId)
+              .then ((dbUserData) => res.json(dbUserData));
+  },
 };
