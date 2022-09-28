@@ -24,15 +24,14 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-  deleteUser(req,res){
-    User.findOneAndDelete( req.params.userId )
-        //  .then((userData) => 
-        //    !userData
-        //    ? res.status(404).json() 
-        //    : Thought.deleteMany({ userName: userData.username} )
-        //              .then((user) => res.status(200).json(user))
-        //  )
-        .then((user) => res.status(200).json(user))
+  async deleteUser(req,res){
+    let user = await User.findOneAndDelete( req.params.userId );
+    if(!user){
+      res.status(404).json() 
+    } else {
+      await Thought.deleteMany({ userName: user.username} );
+    }
+    res.status(200).json(user);
   },
   updateUser(req,res){
     User.findOneAndUpdate( 

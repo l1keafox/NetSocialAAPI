@@ -1,3 +1,4 @@
+const { User } = require('../models');
 const Thought = require('../models/Thought');
 
 
@@ -19,10 +20,16 @@ module.exports = {
         )
         .catch((err) => res.status(500).json(err));
     },
-    createThought(req,res){
-        Thought.create(req.body)
-        .then((dbUserData) => res.json(dbUserData))
-        .catch((err) => res.status(500).json(err));
+    async createThought(req,res){
+      // We need to have this add this thought.id too 
+      try{
+        let dbUserData = await Thought.create(req.body);
+        let userd = await User.findOneAndUpdate({username: req.body.userName},{$push:{thoughts: dbUserData._id}},{ new: true });
+        res.json(dbUserData);
+      }catch(err){
+        res.status(500).json(err)
+      }
+
     },
     updateThought(req,res){
         Thought.findOneAndUpdate( 

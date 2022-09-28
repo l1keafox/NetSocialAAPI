@@ -10,13 +10,7 @@ connection.once("open", async () => {
   // connected
   // Delete all that exist
   await User.deleteMany({});
-  await Thought.deleteMany({});
-  await Reaction.deleteMany({});
-
   let users = [];
-  let thoughts = [];
-  let reactions = [];
-
   for (let i = 0; i < 20; i++) {
     const username = getRandomName();
     const first = username.split(' ')[0];
@@ -27,12 +21,20 @@ connection.once("open", async () => {
         "email":`${last}@${first}.com`,
     });
   }
-  thoughts = getRandomThought(10);
-  reactions = getReaction(20);
-   await User.collection.insertMany(users);
-   await Thought.collection.insertMany(thoughts);
-   await Reaction.collection.insertMany(reactions);
+  await User.collection.insertMany(users);
+  console.info("Seeding Users");
 
+  await Thought.deleteMany({});
+  let thoughts = [];
+  thoughts = getRandomThought(10); // We here should have it had all the users to create thoughts with.
+  await Thought.collection.insertMany(thoughts);
+  console.info("Seeding Thoughts");
+
+  await Reaction.deleteMany({});
+  let reactions = [];
+  reactions = getReaction(20); // here we should have all the thoughts and maybe users too add too create reactions too.
+  await Reaction.collection.insertMany(reactions);
+  console.info("Seeding Reacts");
   //console.table(users);
   //console.table(videos);
   console.info("Seeding complete! 🌱");
