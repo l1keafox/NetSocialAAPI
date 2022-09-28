@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Thought = require("../models/Thought");
 
 module.exports = {
   getUsers(req, res) {
@@ -25,11 +26,13 @@ module.exports = {
 
   deleteUser(req,res){
     User.findOneAndDelete( req.params.userId )
-        .then((userData) => 
-          !userData
-          ? res.status(404).json() 
-          : Thought.remove({ userName: userData.username} )
-        );
+        //  .then((userData) => 
+        //    !userData
+        //    ? res.status(404).json() 
+        //    : Thought.deleteMany({ userName: userData.username} )
+        //              .then((user) => res.status(200).json(user))
+        //  )
+        .then((user) => res.status(200).json(user))
   },
   updateUser(req,res){
     User.findOneAndUpdate( 
