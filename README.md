@@ -15,18 +15,26 @@
   6.  [License](#License)
   
   ## Usage 
-   Run 'node index.js' and answer the prompts given
+   Run 'node index.js' api is available through the route api/user and api/thought
   
-* <a href='https://l1keafox.github.io/NetSocialAPI/'  target="_blank"> Click here for deployment </a> 
+    The route for api/thought/ has the following: GET,POST.
+    GET/PUT/DELETE require a id at the end of /thought/
+    POST/DELETE require an /thought/?thoughtID/reactions/
 
 
-  
-  ![Website](/assets/images/readme.PNG)
+    The route for api/users/ has the following: GET,POST.
+    GET/PUT/DELETE require a id at the end of /users/
+    POST/DELETE require an /users/?userID/friend/?friendID/
+
   
   ## Installation 
-   1. Download repo 
- 2. Run "node index.js"
-  
+  1. Download repo 
+  2. npm install
+  3. If you want to seed - 'npm run seed'
+  2. Run "node index.js"
+
+  ![Website](/utils/screenshot.PNG)
+
   
   ## Contributing 
   We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's: 
