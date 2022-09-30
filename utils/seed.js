@@ -19,22 +19,45 @@ connection.once("open", async () => {
     users.push({
         username,
         "email":`${last}@${first}.com`,
+        "thoughts":[],
     });
   }
-  await User.collection.insertMany(users);
-  console.info("Seeding Users");
-
-  await Thought.deleteMany({});
-  let thoughts = [];
-  thoughts = getRandomThought(10); // We here should have it had all the users to create thoughts with.
-  await Thought.collection.insertMany(thoughts);
-  console.info("Seeding Thoughts");
+  // We create users then using those users
 
   await Reaction.deleteMany({});
   let reactions = [];
-  reactions = getReaction(20); // here we should have all the thoughts and maybe users too add too create reactions too.
-  await Reaction.collection.insertMany(reactions);
+  // we are passing users for names, and thoughts too add it self too.
+  reactions = getReaction(20,users); // here we should have all the thoughts and maybe users too add too create reactions too.
+  let reacts = await Reaction.collection.insertMany(reactions);
   console.info("Seeding Reacts");
+
+  let reactArray =[];
+  for(let i in reacts.insertedIds){
+    reactArray.push( reacts.insertedIds[i] );
+  }
+  await Thought.deleteMany({});
+  let thoughts = [];
+  // we creates thoughts. we are passing users too it.
+  thoughts = getRandomThought(10,users,reactArray); // We here should have it had all the users to create thoughts with.
+  let thoughts2 = await Thought.collection.insertMany(thoughts);
+  console.info("Seeding Thoughts");
+  let thoughtArray =[];
+
+  // So we need to find the username in these so 
+  for(let i in thoughts2.insertedIds){
+    let oneThought = await Thought.findOne({ _id: thoughts2.insertedIds[i] });
+    for(let e in users){
+      if(users[e].username === oneThought.username){
+        users[e].thoughts.push(thoughts2.insertedIds[i]);
+      }
+    }
+  }
+
+  // then we take those thoughts and add it to users thoughts.
+  await User.collection.insertMany(users);
+  console.info("Seeding Users");
+
+
   //console.table(users);
   //console.table(videos);
   console.info("Seeding complete! 🌱");

@@ -22,6 +22,7 @@ const reactSchema = new Schema(
         createdAt:{
             type:Date,
             default: Date.now,
+            get: date=>date.toDateString()
             // Set default value to the current timestamp
             // Use a getter method to format the timestamp on query            
         }

@@ -89,34 +89,34 @@ const getRandomName = () =>
   `${getRandomArrItem(names)} ${getRandomArrItem(names)}`;
 
 // Function to generate random videos that we can add to the database. Includes video responses.
-const getRandomVideos = (int) => {
-  let results = [];
-  for (let i = 0; i < int; i++) {
-    results.push({
-      published: Math.random() < 0.5,
-      description: getRandomArrItem(descriptionsBodies),
-      advertiserFriendly: Math.random() < 0.5,
-      responses: [...getVideoResponses(3)],
-    });
-  }
-  return results;
-};
+// const getRandomVideos = (int) => {
+//   let results = [];
+//   for (let i = 0; i < int; i++) {
+//     results.push({
+//       published: Math.random() < 0.5,
+//       description: getRandomArrItem(descriptionsBodies),
+//       advertiserFriendly: Math.random() < 0.5,
+//       responses: [...getVideoResponses(3)],
+//     });
+//   }
+//   return results;
+// };
 
 // Create the responses that will be added to each video
-const getVideoResponses = (int) => {
-  if (int === 1) {
-    return getRandomArrItem(possibleResponses);
-  }
-  let results = [];
-  for (let i = 0; i < int; i++) {
-    results.push({
-      responseBody: getRandomArrItem(possibleResponses),
-      username: getRandomName(),
-    });
-  }
-  return results;
-};
-const getReaction = (int) => {
+// const getVideoResponses = (int) => {
+//   if (int === 1) {
+//     return getRandomArrItem(possibleResponses);
+//   }
+//   let results = [];
+//   for (let i = 0; i < int; i++) {
+//     results.push({
+//       responseBody: getRandomArrItem(possibleResponses),
+//       username: getRandomName(),
+//     });
+//   }
+//   return results;
+// };
+const getReaction = (int,users) => {
   if (int === 1) {
     return getRandomArrItem(possibleResponses);
   }
@@ -124,18 +124,18 @@ const getReaction = (int) => {
   for (let i = 0; i < int; i++) {
     results.push({
       reactionBody: getRandomArrItem(possibleResponses),
-      username: getRandomName(),
+      username: getRandomArrItem(users).username,
     });
   }
   return results;
 };
-const getRandomThought = (int) => {
+const getRandomThought = (int,users,reactId) => {
   let results = [];
   for (let i = 0; i < int; i++) {
     results.push({
       thoughtText: getRandomArrItem(descriptionsBodies),
-      username: getRandomName(),
-      responses: [...getReaction(3)],
+      username: getRandomArrItem(users).username,
+      reactions: reactId.splice(0,Math.floor(Math.random()*3)), //getReaction(3) this currently does not work because this array needs to have objectId('')
     });
   }
   return results;
