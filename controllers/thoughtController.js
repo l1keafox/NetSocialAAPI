@@ -1,5 +1,6 @@
 const { User } = require('../models');
 const Thought = require('../models/Thought');
+const Reaction = require('../models/Reaction');
 
 
 module.exports = {
@@ -44,23 +45,51 @@ module.exports = {
       
     },
     deleteThought(req,res){
-        Thought.findOneAndDelete( req.params.thoughtId )
+      Thought.findOneAndRemove({ _id: req.params.thoughtId })
         .then((dbUserData) => res.json(dbUserData));
-
     },
-    addReactionToThought(req,res){
-        Thought.findByIdAndUpdate(
-            { _id: req.params.thoughtId },
-            {
-              $push: {
-                reactions: req.body,
-              },
-            }
-          ).then ((dbUserData) => res.json(dbUserData))
+    // async addReactionToThought(req,res){
+    //     let update = await Thought.findByIdAndUpdate(
+    //         { _id: req.params.thoughtId },
+    //         { $addToSet: { reactions: this } },
+    //         {runValidators:true, new:true}
+    //       );
+    //       // we find the user by userName and find that.
+    //       console.log(update);
+    //     // let user = User.findByIdAndUpdate(
+    //     //     {username : req.body.username },
+    //     //     {
+    //     //       $push: {
+    //     //         reactions: req.body,
+    //     //       },
+    //     //     }
+    //     //   );
+    //       console.log("out?",update);
+    //       // res.json(update)
+    //       res.json();
+    // },
+    addReactionToThought(req, res) {
+      Thought.findOneAndUpdate(
+        { _id: req.params.thoughtId },
+        { $addToSet: { reactions: req.body } },
+        { runValidators: true, new: true }
+      )
+        .then((thought) =>
+          !thought
+            ? res.status(404).json({ message: "No thought with this id!" })
+            : res.json(thought)
+        )
+        .catch((err) => res.status(500).json(err));
     },
     deleteReactionFromThought(req,res){
-        Thought.findOneAndRemove( {reactions: req.params.thoughtId} )
-        .then ((dbUserData) => res.json(dbUserData));
+      Thought.findOneAndUpdate(
+        { _id: req.params.thoughtId },
+        { $pull: { reactions: { _id: req.params.reactionId } } },
+        { runValidators: true, new: true }
+      ).then ((dbUserData) => res.json(dbUserData));
+
+//      Reaction.findOneAndRemove( {reactions: req.params.reactionId} )
+ //       
     },
 
 };

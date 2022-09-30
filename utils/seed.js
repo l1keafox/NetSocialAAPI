@@ -24,17 +24,17 @@ connection.once("open", async () => {
   }
   // We create users then using those users
 
-  await Reaction.deleteMany({});
-  let reactions = [];
-  // we are passing users for names, and thoughts too add it self too.
+  // await Reaction.deleteMany({});
+  // let reactions = [];
+  // // we are passing users for names, and thoughts too add it self too.
   reactions = getReaction(20,users); // here we should have all the thoughts and maybe users too add too create reactions too.
-  let reacts = await Reaction.collection.insertMany(reactions);
-  console.info("Seeding Reacts");
-
-  let reactArray =[];
-  for(let i in reacts.insertedIds){
-    reactArray.push( reacts.insertedIds[i] );
-  }
+  // let reacts = await Reaction.collection.insertMany(reactions);
+//  console.info("Seeding Reacts");
+console.log(reactions);
+  let reactArray =reactions;
+  // for(let i in reacts.insertedIds){
+  //   reactArray.push( reacts.insertedIds[i] );
+  // }
   await Thought.deleteMany({});
   let thoughts = [];
   // we creates thoughts. we are passing users too it.

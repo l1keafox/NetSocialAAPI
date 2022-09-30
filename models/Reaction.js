@@ -40,5 +40,5 @@ const reactSchema = new Schema(
     // Schema Settings
 
     // This will not be a model, but rather will be used as the reaction field's subdocument schema in the Thought model.
-const React = model('reaction',reactSchema);
-module.exports = React;
+// const React = model('reaction',reactSchema);
+module.exports = reactSchema;
