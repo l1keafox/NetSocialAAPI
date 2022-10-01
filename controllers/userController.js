@@ -25,7 +25,7 @@ module.exports = {
   },
 
   async deleteUser(req,res){
-    let user = await User.findOneAndDelete( req.params.userId );
+    let user = await User.findOneAndDelete( {_id:req.params.userId} );
     if(!user){
       res.status(404).json() 
     } else {
@@ -37,7 +37,7 @@ module.exports = {
     User.findOneAndUpdate( 
       {_id:req.params.userId},
       {$set: req.body},
-      {runValidators:true, new:true}
+      { new:true}
     ).then((user)=>
       res.json(user)
     ).catch((err)=>{

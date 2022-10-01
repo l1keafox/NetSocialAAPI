@@ -36,6 +36,10 @@
   ![Website](/utils/screenshot.PNG)
 
   
+ ## Video Link of useage
+
+  <a href='https://drive.google.com/file/d/1bjEHIAuO2R8Z_g7jpI3ZSr4-7z9wW__o/view'> ![Website](/utils/videoCap.PNG) </a>
+
   ## Contributing 
   We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's: 
 

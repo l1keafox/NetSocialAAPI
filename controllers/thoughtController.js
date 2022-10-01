@@ -48,26 +48,7 @@ module.exports = {
       Thought.findOneAndRemove({ _id: req.params.thoughtId })
         .then((dbUserData) => res.json(dbUserData));
     },
-    // async addReactionToThought(req,res){
-    //     let update = await Thought.findByIdAndUpdate(
-    //         { _id: req.params.thoughtId },
-    //         { $addToSet: { reactions: this } },
-    //         {runValidators:true, new:true}
-    //       );
-    //       // we find the user by userName and find that.
-    //       console.log(update);
-    //     // let user = User.findByIdAndUpdate(
-    //     //     {username : req.body.username },
-    //     //     {
-    //     //       $push: {
-    //     //         reactions: req.body,
-    //     //       },
-    //     //     }
-    //     //   );
-    //       console.log("out?",update);
-    //       // res.json(update)
-    //       res.json();
-    // },
+
     addReactionToThought(req, res) {
       Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
@@ -87,9 +68,6 @@ module.exports = {
         { $pull: { reactions: { _id: req.params.reactionId } } },
         { runValidators: true, new: true }
       ).then ((dbUserData) => res.json(dbUserData));
-
-//      Reaction.findOneAndRemove( {reactions: req.params.reactionId} )
- //       
     },
 
 };
